@@ -1,14 +1,7 @@
-const express = require('express')
-const bookshelf = require('./src/databases')
-const app = express()
+const app = require('./src')
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+const { app: { port } } = require('./src/configs')
 
-
-app.listen(3000, () => {
-  console.log('================================================');
-  console.log('App is running on PORT: ', 3000);
-  console.log('================================================');
+app.listen(port, () => {
+  console.log('App is running on PORT: ', port)
 })

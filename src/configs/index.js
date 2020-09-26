@@ -3,7 +3,7 @@
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-module.exports = Object.freeze({
+module.exports = {
   db: {
     client: 'mysql',
     connection: {
@@ -11,14 +11,14 @@ module.exports = Object.freeze({
       database: process.env.DB_NAME || 'ecommerce',
       user: process.env.DB_USERNAME || 'huymanh',
       password: process.env.DB_PASSWORD || 'huymanh',
-      charset: 'utf8mb4'
+      charset: 'utf8mb4',
     },
     pool: {
       min: 2,
-      max: 10
-    }
+      max: 10,
+    },
   },
   app: {
-    port: parseInt(process.env.PORT) || 3003
+    port: parseInt(process.env.PORT) || 3000,
   },
-})
+}
