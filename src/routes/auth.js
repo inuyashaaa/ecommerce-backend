@@ -47,7 +47,7 @@ router.post('/register', async (req, res) => {
       email: email,
       password: hashedPassword,
     }).save()
-    res.json({ id: user.id })
+    res.json({ success: true, data: { ...user.attributes, password: '' } })
   } catch (error) {
     console.log('error', error)
     res.status(400).json({
@@ -108,4 +108,41 @@ router.post('/profile', verifyToken, async (req, res, next) => {
     })
   }
 })
+
+router.post('/', verifyToken, async (req, res, next) => {
+  try {
+    const user = await new User({ id: req.user.id }).fetch({ require: false })
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'User not found',
+      })
+    }
+    // Update fullname
+    const { fullname, gender, birthday, phone } = req.body
+    if (fullname) {
+      user.set('fullname', fullname)
+      await user.save()
+    }
+    if (gender) {
+      user.set('gender', gender)
+      await user.save()
+    }
+    if (birthday) {
+      user.set('birthday', birthday)
+      await user.save()
+    }
+    if (phone) {
+      user.set('phone', phone)
+      await user.save()
+    }
+    return res.json({ success: true, data: { ...user.attributes, password: '' } })
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message,
+    })
+  }
+})
+
 module.exports = router

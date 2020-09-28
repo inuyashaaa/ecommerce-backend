@@ -66,5 +66,8 @@ app.get('/github', function (req, res) {
   // don't return immediately
   // res.status(200).send("deployed");
 })
+app.all('*', (req, res) => {
+  res.status(404).json({ success: false, message: 'Page not found' })
+})
 
 module.exports = app
