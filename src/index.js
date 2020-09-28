@@ -53,8 +53,8 @@ app.get('/github', function (req, res) {
 
     // Retrieve last git status again
     const cmd = 'git log -n 1'
-    const exec = require('child_process').exec
     exec(cmd, function (error, stdout, stderr) {
+      console.log('git log -n 1')
       if (error !== null) {
         const msg = 'Error during the execution of git command: ' + stderr
         return res.send(msg)
