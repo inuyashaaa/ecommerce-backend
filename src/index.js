@@ -29,7 +29,7 @@ app.get('/', function (req, res) {
 app.post('/github', function (req, res) {
   console.log('Received a github hook event (POST)')
   const exec = require('child_process').exec
-  exec('../deploy ' + 'ecommerce', function (error, stdout, stderr) {
+  exec('./deploy ' + 'ecommerce', function (error, stdout, stderr) {
     console.log(stdout)
     if (error !== null) {
       console.log('Error during the execution of redeploy: ' + stderr)
@@ -44,7 +44,7 @@ app.get('/github', function (req, res) {
   console.log('Received a github hook event (GET)')
 
   const exec = require('child_process').exec
-  exec('../deploy ' + 'ecommerce', function (error, stdout, stderr) {
+  exec('./deploy ' + 'ecommerce', function (error, stdout, stderr) {
     console.log(stdout)
     if (error !== null) {
       console.log('Error during the execution of redeploy: ' + stderr)
