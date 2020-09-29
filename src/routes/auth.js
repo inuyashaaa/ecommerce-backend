@@ -87,7 +87,7 @@ router.post('/login', async (req, res) => {
   // Create and assign a token
   const token = jwt.sign({ id: userExist.get('id') }, process.env.TOKEN_SECRET)
 
-  res.json({ success: true, token })
+  res.json({ success: true, data: { token } })
 })
 
 router.post('/profile', verifyToken, async (req, res, next) => {
@@ -100,7 +100,7 @@ router.post('/profile', verifyToken, async (req, res, next) => {
       })
     }
     user.set('password', '')
-    res.json({ ...user.attributes })
+    res.json({ success: true, data: { ...user.attributes } })
   } catch (error) {
     res.status(400).json({
       success: false,
