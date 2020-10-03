@@ -5,9 +5,11 @@ app.use(bodyParser.json())
 
 // Import Routes
 const authRoute = require('./routes/auth')
+const productRoute = require('./routes/product')
 
 // Route Middleware
 app.use('/api/user', authRoute)
+app.use('/api/product', productRoute)
 
 // API for verifying server is running, show latest git commit info
 app.get('/', function (req, res) {
