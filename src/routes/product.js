@@ -11,7 +11,7 @@ router.post('/', verifyToken, async (req, res, next) => {
         message: 'Product not found',
       })
     }
-    res.json({ success: true, data: { products } })
+    res.json({ success: true, data: { ...products } })
   } catch (error) {
     res.status(400).json({
       success: false,
