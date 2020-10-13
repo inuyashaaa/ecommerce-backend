@@ -21,7 +21,14 @@ router.post('/', verifyToken, async (req, res, next) => {
       prod.saledPrice = newPrice.toString()
       return prod
     })
-    res.json({ success: true, data: newData })
+    const flashSale = _.filter(newData, { flash_sale: 1 })
+    const megaSale = _.filter(newData, { mega_sale: 1 })
+    const responseData = {
+      all: newData,
+      flashSale,
+      megaSale,
+    }
+    res.json({ success: true, data: responseData })
   } catch (error) {
     res.status(400).json({
       success: false,
