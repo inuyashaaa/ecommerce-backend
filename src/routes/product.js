@@ -14,7 +14,7 @@ router.post('/', verifyToken, async (req, res, next) => {
     const data = products.models
     const newData = _.map(data, (product) => {
       const prod = product.attributes
-      prod.product_image_file = `https://huymanh.dev/ecommerce-cms/uploads/${prod.product_image_file}`
+      prod.product_image_file = `${process.env.ASSET_URL}${prod.product_image_file}`
       const price = parseFloat(prod.price || 0)
       const sale = parseFloat(prod.sale)
       const newPrice = price - price * sale / 100
