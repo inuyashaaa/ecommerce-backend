@@ -1,7 +1,7 @@
+const _ = require('lodash')
 const router = require('express').Router()
 const Product = require('../models/Product')
 const verifyToken = require('./verifyToken')
-
 router.post('/', verifyToken, async (req, res, next) => {
   try {
     const products = await new Product().fetchAll({ require: false })
@@ -12,7 +12,16 @@ router.post('/', verifyToken, async (req, res, next) => {
       })
     }
     const data = products.models
-    res.json({ success: true, data })
+    const newData = _.map(data, (product) => {
+      const prod = product.attributes
+      prod.product_image_file = `https://huymanh.dev/ecommerce-cms/uploads/${prod.product_image_file}`
+      const price = parseFloat(prod.price || 0)
+      const sale = parseFloat(prod.sale)
+      const newPrice = price - price * sale / 100
+      prod.saledPrice = newPrice.toString()
+      return prod
+    })
+    res.json({ success: true, data: newData })
   } catch (error) {
     res.status(400).json({
       success: false,
